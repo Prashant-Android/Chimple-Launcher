@@ -1,0 +1,40 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.ChimpleMode" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="colorPrimary">@color/secondary</item>
+
+        <item name="android:statusBarColor">@color/white</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
+
+    </style>
+
+    <style name="Theme.ChimpleMode" parent="Base.Theme.ChimpleMode" />
+
+    <style name="MaterialAlertDialog.Rounded" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
+        <item name="shapeAppearanceOverlay">@style/MaterialAlertDialog.Rounded</item>
+        <item name="cornerSize">@dimen/_19sdp</item>
+    </style>
+    <style name="BottomNavigationTextStyle" parent="Widget.MaterialComponents.BottomNavigationView">
+        <item name="android:textSize">12dp</item>
+        <item name="android:textColor">@color/black</item>
+
+    </style>
+
+    <style name="EditTextStyle" parent="Widget.AppCompat.EditText">
+        <item name="android:background">@drawable/cl_edit_text_bg</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:fontFamily">@font/bold</item>
+        <item name="android:paddingStart">@dimen/_12sdp</item>
+        <item name="android:paddingEnd">@dimen/_12sdp</item>
+        <item name="android:textColorHint">@color/hintColor</item>
+    </style>
+
+
+    <style name="SwitchCompatThemeOverlay" parent="">
+        <item name="colorControlActivated">@color/secondary</item>
+        <item name="colorControlNormal">#808080</item>
+        <item name="colorSurface">@color/fadeBlue</item>
+        <item name="colorButtonNormal">@color/hintColor</item>
+    </style>
+
+</resources>

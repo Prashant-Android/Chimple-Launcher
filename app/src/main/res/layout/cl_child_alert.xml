@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:gravity="center"
+    android:padding="@dimen/_16sdp"
+    android:background="#C8FFFFFF"
+    android:orientation="vertical"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:layout_width="@dimen/_60sdp"
+        android:layout_height="@dimen/_60sdp"
+        android:src="@drawable/logo"/>
+
+    <TextView
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Hey there!"
+        android:fontFamily="@font/bold"
+        android:textColor="@color/secondary"
+        android:textSize="@dimen/_20sdp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:gravity="center"
+        android:text=" Oops! Exiting Child Mode is Not Allowed !"
+        android:fontFamily="@font/bold"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_14sdp"/>
+
+    <ProgressBar
+        android:layout_marginTop="@dimen/_20sdp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminateTint="@color/secondary"/>"
+
+
+</LinearLayout>

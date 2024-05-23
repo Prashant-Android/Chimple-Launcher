@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    tools:context=".view.AppListActivity">
+
+    <LinearLayout
+        android:id="@+id/actionBar"
+        android:layout_marginBottom="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:layout_marginHorizontal="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/bold"
+            android:text="App Selection"
+            android:textColor="@color/secondary"
+            android:textSize="@dimen/_18sdp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:fontFamily="@font/regular"
+            android:text="Please select the app you want to show to your child in home screen."
+            android:textColor="@color/black"
+            android:textSize="@dimen/_12sdp" />
+
+
+        <EditText
+            android:id="@+id/searchAppEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/cl_edit_text_bg"
+            android:drawableStart="@drawable/icn_search"
+            android:drawablePadding="@dimen/_10sdp"
+            android:fontFamily="@font/bold"
+            android:hint="Search App Here"
+            android:paddingHorizontal="@dimen/_12sdp"
+            android:textColorHint="@color/hintColor"
+            android:textSize="@dimen/_12sdp" />
+
+
+    </LinearLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/appListRecyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/actionBar"/>
+
+
+
+</RelativeLayout>

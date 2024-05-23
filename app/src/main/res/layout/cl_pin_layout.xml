@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/_16sdp">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/bold"
+            android:text="Create PIN"
+            android:textColor="@color/secondary"
+            android:textSize="@dimen/_18sdp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:fontFamily="@font/regular"
+            android:text="The Pin needed to change settings. We advise you to use a strong pin."
+            android:textColor="@color/black"
+            android:textSize="@dimen/_12sdp" />
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_15sdp"
+            app:boxBackgroundMode="none"
+            app:hintAnimationEnabled="false"
+            app:hintEnabled="false"
+            app:passwordToggleEnabled="true">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/userPin"
+                style="@style/EditTextStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLength="4"
+                android:gravity="top"
+                android:hint="4 Digit Pin"
+                android:inputType="numberPassword"
+                android:paddingTop="@dimen/_10sdp"
+                android:singleLine="true"
+                android:textColorHint="@color/hintColor" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+
+
+
+        <EditText
+            android:id="@+id/userEmail"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:background="@drawable/cl_edit_text_bg"
+            android:fontFamily="@font/bold"
+            android:hint="Enter recovery email address"
+            android:inputType="textEmailAddress"
+            android:paddingHorizontal="@dimen/_12sdp"
+            android:textColorHint="@color/hintColor" />
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnSetPin"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_45sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:backgroundTint="@color/secondary"
+            android:fontFamily="@font/bold"
+            android:text="Set Pin"
+            app:cornerRadius="14dp" />
+
+    </LinearLayout>
+</ScrollView>

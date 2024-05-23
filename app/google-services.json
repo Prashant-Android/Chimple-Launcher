@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "307344349405",
+    "project_id": "chimple-mode",
+    "storage_bucket": "chimple-mode.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:307344349405:android:9050ecbf0e105881d9a334",
+        "android_client_info": {
+          "package_name": "com.chimple.parentalcontrol"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBJSaUsB_ZiAiNHYeoogF_SV7kgDkLWfnM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
