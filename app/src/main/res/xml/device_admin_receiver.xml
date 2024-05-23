@@ -6,5 +6,7 @@
         <reset-password />
         <force-lock />
         <wipe-data />
+        <disable-keyguard-features />
+
     </uses-policies>
 </device-admin>

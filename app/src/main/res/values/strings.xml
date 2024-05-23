@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Chimple Mode</string>
+    <string name="accessibility_service_description">For better performance\n</string>
 </resources>

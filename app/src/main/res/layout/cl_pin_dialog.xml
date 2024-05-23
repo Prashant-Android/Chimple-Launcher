@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="@dimen/_20sdp">
+
+    <ImageView
+        android:layout_width="@dimen/_80sdp"
+        android:layout_height="@dimen/_80sdp"
+        android:src="@drawable/icn_lock"/>
+
+    <EditText
+
+        android:id="@+id/pin"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_40sdp"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:background="@drawable/cl_edit_text_bg"
+        android:fontFamily="@font/bold"
+        android:gravity="center"
+        android:hint="* * * * * *"
+        android:letterSpacing="0.4"
+        android:padding="@dimen/_10sdp"
+        android:textSize="@dimen/_14sdp"
+        android:inputType="numberPassword"
+        android:textColorHint="@color/hintColor" />
+
+    <TextView
+        android:id="@+id/closeDialogBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:fontFamily="@font/bold"
+        android:text="Close Dialog"
+        android:textSize="@dimen/_14sdp"
+        android:textColor="@color/secondary"/>
+</LinearLayout>

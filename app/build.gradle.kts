@@ -56,4 +56,7 @@ dependencies {
     //Gif Viewer
     implementation ("pl.droidsonroids.gif:android-gif-drawable:1.2.28")
 
+    //Keyboard Visibility
+    implementation("net.yslibrary.keyboardvisibilityevent:keyboardvisibilityevent:3.0.0-RC3")
+
 }

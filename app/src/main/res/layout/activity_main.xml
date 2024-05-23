@@ -16,14 +16,15 @@
 
         <ImageView
             android:id="@+id/logo"
-            android:layout_width="@dimen/_25sdp"
-            android:layout_height="@dimen/_25sdp"
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="@dimen/_20sdp"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
             android:src="@drawable/logo" />
 
         <TextView
             android:layout_width="wrap_content"
+            android:id="@+id/title"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginStart="@dimen/_10sdp"
@@ -31,7 +32,7 @@
             android:fontFamily="@font/bold"
             android:text="Chimple Mode"
             android:textColor="@color/secondary"
-            android:textSize="@dimen/_18sdp" />
+            android:textSize="@dimen/_16sdp" />
 
 
 
@@ -77,8 +78,10 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         app:fontFamily="@font/bold"
+        app:itemPaddingTop="@dimen/_2sdp"
+        android:paddingTop="@dimen/_8sdp"
         app:itemBackground="@null"
-        app:itemIconSize="@dimen/_16sdp"
+        app:itemIconSize="@dimen/_20sdp"
         app:itemIconTint="@color/secondary"
         app:itemTextColor="@color/black"
         app:labelVisibilityMode="labeled"

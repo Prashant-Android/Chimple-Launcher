@@ -46,6 +46,7 @@ public class AppListActivity extends AppCompatActivity {
 
         new Handler().postDelayed(this::loadAppList, 500);
 
+        binding.backBtn.setOnClickListener(v -> finish());
         binding.searchAppEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}

@@ -35,7 +35,7 @@ public class ChildAlert {
                             WindowManager.LayoutParams.TYPE_PHONE,
                     WindowManager.LayoutParams.FLAG_FULLSCREEN | // Set full-screen flag
                             WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE |
-                            WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE |
+                            WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL | // Don't receive touch events outside the window
                             WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN, // Flag to cover the status bar
                     PixelFormat.TRANSLUCENT
             );
@@ -51,11 +51,7 @@ public class ChildAlert {
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(intent);
 
-
-
             new Handler(Looper.getMainLooper()).postDelayed(this::gone, 4500);
-        } else {
-            Toast.makeText(context, "Floating view is already showing", Toast.LENGTH_SHORT).show();
         }
     }
 
