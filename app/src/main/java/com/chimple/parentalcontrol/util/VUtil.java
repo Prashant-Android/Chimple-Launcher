@@ -11,7 +11,6 @@ import android.widget.Toast;
 import com.chimple.parentalcontrol.model.AppModel;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -39,7 +38,7 @@ public class VUtil {
             }
         }
 
-        Collections.sort(appList, (app1, app2) -> app1.getAppName().compareToIgnoreCase(app2.getAppName()));
+        appList.sort((app1, app2) -> app1.getAppName().compareToIgnoreCase(app2.getAppName()));
 
         return appList;
     }
@@ -55,8 +54,7 @@ public class VUtil {
                 Drawable appIcon = pm.getApplicationIcon(appInfo);
                 AppModel app = new AppModel(appName, packageName, appIcon);
                 approvedAppsList.add(app);
-            } catch (PackageManager.NameNotFoundException e) {
-                e.printStackTrace();
+            } catch (PackageManager.NameNotFoundException ignored) {
             }
         }
 

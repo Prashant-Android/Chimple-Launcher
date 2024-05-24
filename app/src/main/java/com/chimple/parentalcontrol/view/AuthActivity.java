@@ -6,15 +6,12 @@ import android.os.Bundle;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 
 import com.chimple.parentalcontrol.R;
 import com.chimple.parentalcontrol.databinding.ActivityAuthBinding;
 import com.chimple.parentalcontrol.databinding.ClForgotPasswordLayoutBinding;
-import com.chimple.parentalcontrol.databinding.ClPinLayoutBinding;
 import com.chimple.parentalcontrol.firebase.Constant;
 import com.chimple.parentalcontrol.model.UserModel;
-import com.chimple.parentalcontrol.services.PersistentForegroundService;
 import com.chimple.parentalcontrol.util.CProgressDialog;
 import com.chimple.parentalcontrol.util.LocalPreference;
 import com.chimple.parentalcontrol.util.MyDialog;
@@ -42,16 +39,13 @@ public class AuthActivity extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
 
 
-        if (auth.getCurrentUser() != null || !LocalPreference.getPin().equals("")) {
+        if (auth.getCurrentUser() != null || !LocalPreference.getPin().isEmpty()) {
             startActivity(new Intent(AuthActivity.this, MainActivity.class));
             finish();
         }
 
 
-        binding.tvSkip.setOnClickListener(v -> {
-            startActivity(new Intent(AuthActivity.this, SettingActivity.class));
-
-        });
+        binding.tvSkip.setOnClickListener(v -> startActivity(new Intent(AuthActivity.this, SettingActivity.class)));
 
 
         binding.dontHaveAccountBtn.setOnClickListener(v -> {
@@ -146,9 +140,7 @@ public class AuthActivity extends AppCompatActivity {
                     model.setEmail(email);
                     model.setPassword(password);
 
-                    Constant.userDb.child(model.getUid()).setValue(model).addOnCompleteListener(task1 -> {
-                        CProgressDialog.mDismiss();
-                    }).addOnFailureListener(e -> {
+                    Constant.userDb.child(model.getUid()).setValue(model).addOnCompleteListener(task1 -> CProgressDialog.mDismiss()).addOnFailureListener(e -> {
                         CProgressDialog.mDismiss();
                         VUtil.showErrorToast(getApplicationContext(), e.getMessage());
                     });

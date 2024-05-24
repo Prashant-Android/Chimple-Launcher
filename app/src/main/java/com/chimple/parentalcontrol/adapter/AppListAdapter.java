@@ -18,8 +18,8 @@ import java.util.List;
 
 public class AppListAdapter extends RecyclerView.Adapter<AppListAdapter.AppViewHolder> {
 
-    private Context context;
-    private List<AppModel> appList;
+    private final Context context;
+    private final List<AppModel> appList;
 
     public AppListAdapter(Context context, List<AppModel> appList) {
         this.context = context;

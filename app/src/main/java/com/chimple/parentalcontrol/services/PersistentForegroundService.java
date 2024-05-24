@@ -27,6 +27,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import java.util.SortedMap;
 import java.util.Timer;
@@ -119,13 +120,13 @@ public class PersistentForegroundService extends Service {
         if (usageStatsManager != null) {
             long currentTime = System.currentTimeMillis();
             List<UsageStats> appList = usageStatsManager.queryUsageStats(UsageStatsManager.INTERVAL_DAILY, currentTime - 1000 * 10, currentTime);
-            if (appList != null && appList.size() > 0) {
+            if (appList != null && !appList.isEmpty()) {
                 SortedMap<Long, UsageStats> sortedMap = new TreeMap<>();
                 for (UsageStats usageStats : appList) {
                     sortedMap.put(usageStats.getLastTimeUsed(), usageStats);
                 }
                 if (!sortedMap.isEmpty()) {
-                    return sortedMap.get(sortedMap.lastKey()).getPackageName();
+                    return Objects.requireNonNull(sortedMap.get(sortedMap.lastKey())).getPackageName();
                 }
             }
         }

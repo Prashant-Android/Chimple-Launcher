@@ -38,7 +38,7 @@ public class MyDialog {
 
     public void show() {
         Context context = contextRef.get();
-        if (context != null && context instanceof AppCompatActivity && !((AppCompatActivity) context).isFinishing()) {
+        if (context instanceof AppCompatActivity && !((AppCompatActivity) context).isFinishing()) {
             AlphaAnimation alphaAnimation = new AlphaAnimation(0f, 1f);
             alphaAnimation.setDuration(600);
             dialogView.startAnimation(alphaAnimation);

@@ -52,9 +52,7 @@ public class SettingActivity extends AppCompatActivity {
             }
         });
 
-        binding.changePinCodeBtn.setOnClickListener(v -> {
-            showPinDialog();
-        });
+        binding.changePinCodeBtn.setOnClickListener(v -> showPinDialog());
     }
 
     private void showPinDialog() {
@@ -113,16 +111,16 @@ public class SettingActivity extends AppCompatActivity {
     }
 
     private void updateUsageAccessSwitch() {
-        boolean isPermissionGranted = check_UsgAccs();
+        boolean isPermissionGranted = appUsagePermission();
         isAppUsagePermissionGranted = isPermissionGranted;
         binding.appUsageSwitch.setChecked(isPermissionGranted);
     }
 
-    public boolean check_UsgAccs() {
+    public boolean appUsagePermission() {
         long tme = System.currentTimeMillis();
         UsageStatsManager usm = (UsageStatsManager) getApplicationContext().getSystemService(Context.USAGE_STATS_SERVICE);
         List<UsageStats> al = usm.queryUsageStats(UsageStatsManager.INTERVAL_YEARLY, tme - (1000 * 1000), tme);
-        return al.size() > 0;
+        return !al.isEmpty();
 
     }
 
@@ -130,11 +128,9 @@ public class SettingActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
         if (!LocalPreference.getPin().isEmpty()) {
             binding.nextBtn.setVisibility(View.GONE);
         }
-
         binding.nextBtn.setEnabled(isAlertWindowPermissionGranted && isAppUsagePermissionGranted);
     }
 }

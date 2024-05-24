@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.DecelerateInterpolator;
-import android.widget.LinearLayout;
 
 import androidx.core.content.ContextCompat;
 
@@ -32,7 +31,6 @@ public class CProgressDialog {
             dialog.setContentView(R.layout.progress_bar_layout);
             dialog.setCancelable(false);
         } catch (Exception e) {
-            Log.e("Tag", "Error message", e);
             return;
         }
 

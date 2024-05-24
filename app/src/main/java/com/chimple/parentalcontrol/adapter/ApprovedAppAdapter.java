@@ -2,7 +2,6 @@ package com.chimple.parentalcontrol.adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,8 +20,8 @@ import java.util.List;
 
 public class ApprovedAppAdapter extends RecyclerView.Adapter<ApprovedAppAdapter.AppViewHolder> {
 
-    private Context context;
-    private List<AppModel> approvedAppsList;
+    private final Context context;
+    private final List<AppModel> approvedAppsList;
 
     public ApprovedAppAdapter(Context context, List<AppModel> approvedAppsList) {
         this.context = context;
@@ -42,20 +41,17 @@ public class ApprovedAppAdapter extends RecyclerView.Adapter<ApprovedAppAdapter.
         holder.appNameTextView.setText(appInfo.getAppName());
         holder.appIconImageView.setImageDrawable(appInfo.getAppIcon());
 
-        holder.openApp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Get the package name of the app
-                String packageName = appInfo.getPackageName();
-                // Create an intent to launch the app
-                Intent launchIntent = context.getPackageManager().getLaunchIntentForPackage(packageName);
-                if (launchIntent != null) {
-                    // Launch the app
-                    context.startActivity(launchIntent);
-                } else {
-                    // If launchIntent is null, the app cannot be launched
-                    Toast.makeText(context, "Cannot open app", Toast.LENGTH_SHORT).show();
-                }
+        holder.openApp.setOnClickListener(v -> {
+            // Get the package name of the app
+            String packageName = appInfo.getPackageName();
+            // Create an intent to launch the app
+            Intent launchIntent = context.getPackageManager().getLaunchIntentForPackage(packageName);
+            if (launchIntent != null) {
+                // Launch the app
+                context.startActivity(launchIntent);
+            } else {
+                // If launchIntent is null, the app cannot be launched
+                Toast.makeText(context, "Cannot open app", Toast.LENGTH_SHORT).show();
             }
         });
     }

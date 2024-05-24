@@ -1,9 +1,5 @@
 package com.chimple.parentalcontrol.view;
 
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
@@ -16,19 +12,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.chimple.parentalcontrol.adapter.AppListAdapter;
 import com.chimple.parentalcontrol.databinding.ActivityAppListBinding;
 import com.chimple.parentalcontrol.model.AppModel;
-import com.chimple.parentalcontrol.util.AsyncTaskHelper;
 import com.chimple.parentalcontrol.util.CProgressDialog;
 import com.chimple.parentalcontrol.util.VUtil;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class AppListActivity extends AppCompatActivity {
 
-    private ActivityAppListBinding binding;
     private RecyclerView recyclerView;
     private AppListAdapter adapter;
     private List<AppModel> originalAppList;
@@ -36,7 +27,7 @@ public class AppListActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityAppListBinding.inflate(getLayoutInflater());
+        ActivityAppListBinding binding = ActivityAppListBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         recyclerView = binding.appListRecyclerview;
