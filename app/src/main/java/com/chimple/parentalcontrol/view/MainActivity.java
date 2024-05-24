@@ -1,6 +1,8 @@
 package com.chimple.parentalcontrol.view;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.view.KeyEvent;
@@ -33,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     private final boolean isPinDialogVisible = false;
     private boolean previousSwitchState = false;
 
+    private static final int HOME_SETTINGS_REQUEST_CODE = 1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,10 +56,13 @@ public class MainActivity extends AppCompatActivity {
                         childModeSwitch.setChecked(isSwitchOn);
                         updateChildModeStatus();
                         if (isSwitchOn) {
-                            startAppChecker();
+                            Intent callHomeSettingIntent = new Intent(Settings.ACTION_HOME_SETTINGS);
+                            startActivityForResult(callHomeSettingIntent, HOME_SETTINGS_REQUEST_CODE);
                         } else {
+                            defaultLauncherSetting();
                             closeAppChecker();
                         }
+
                     }
 
                     @Override
@@ -100,6 +106,8 @@ public class MainActivity extends AppCompatActivity {
         final int[] clickCount = {0};
 
         binding.title.setOnClickListener(v -> {
+
+
             clickCount[0]++;
             if (clickCount[0] == 4) {
                 clickCount[0] = 0;
@@ -114,12 +122,40 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    private void defaultLauncherSetting() {
+        Intent callHomeSettingIntent = new Intent(Settings.ACTION_HOME_SETTINGS);
+        startActivity(callHomeSettingIntent);
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == HOME_SETTINGS_REQUEST_CODE) {
+            if (isDefaultLauncher()) {
+                startAppChecker();
+            }
+        }
+    }
 
     private void startAppChecker() {
         Intent serviceIntent = new Intent(this, PersistentForegroundService.class);
         ContextCompat.startForegroundService(getApplicationContext(), serviceIntent);
 
     }
+
+    private boolean isDefaultLauncher() {
+        Intent intent = new Intent(Intent.ACTION_MAIN);
+        intent.addCategory(Intent.CATEGORY_HOME);
+        intent.addCategory(Intent.CATEGORY_DEFAULT);
+
+        List<ResolveInfo> resolveInfoList = getPackageManager().queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
+        for (ResolveInfo resolveInfo : resolveInfoList) {
+            if (resolveInfo.activityInfo.packageName.equals(getPackageName())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 
     private void closeAppChecker() {
         Intent serviceIntent = new Intent(this, PersistentForegroundService.class);
@@ -139,7 +175,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onWrongPin() {
                 VUtil.showErrorToast(MainActivity.this, "Incorrect PIN");
-
             }
 
             @Override
@@ -187,17 +222,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
     @Override
     protected void onResume() {
         super.onResume();
         checkOverlayPermission();
         showApprovedApps();
-
-
     }
-
-
-
 
 }

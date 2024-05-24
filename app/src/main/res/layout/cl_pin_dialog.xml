@@ -7,8 +7,8 @@
     android:padding="@dimen/_20sdp">
 
     <ImageView
-        android:layout_width="@dimen/_80sdp"
-        android:layout_height="@dimen/_80sdp"
+        android:layout_width="@dimen/_70sdp"
+        android:layout_height="@dimen/_70sdp"
         android:src="@drawable/icn_lock"/>
 
     <EditText

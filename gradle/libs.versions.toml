@@ -11,7 +11,7 @@ googleGmsGoogleServices = "4.4.1"
 firebaseAuth = "23.0.0"
 firebaseDatabase = "21.0.0"
 firebaseCrashlytics = "19.0.0"
-googleFirebaseCrashlytics = "3.0.0"
+googleFirebaseCrashlytics = "2.9.9"
 
 [libraries]
 junit = { group = "junit", name = "junit", version.ref = "junit" }

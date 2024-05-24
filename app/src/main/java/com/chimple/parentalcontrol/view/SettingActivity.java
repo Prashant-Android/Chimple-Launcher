@@ -46,9 +46,14 @@ public class SettingActivity extends AppCompatActivity {
 
         }
 
+        binding.backBtn.setOnClickListener(v -> finish());
+
         binding.nextBtn.setOnClickListener(v -> {
-            if (isAlertWindowPermissionGranted && isAppUsagePermissionGranted) {
+            if (isAlertWindowPermissionGranted && isAppUsagePermissionGranted && LocalPreference.getPin().isEmpty()) {
                 showPinDialog();
+            }else{
+                startActivity(new Intent(SettingActivity.this, MainActivity.class));
+                finish();
             }
         });
 

@@ -19,11 +19,9 @@ import androidx.core.app.NotificationCompat;
 import com.chimple.parentalcontrol.R;
 import com.chimple.parentalcontrol.model.AppModel;
 import com.chimple.parentalcontrol.util.AsyncTaskHelper;
-import com.chimple.parentalcontrol.util.ChildAlert;
 import com.chimple.parentalcontrol.util.VUtil;
 import com.chimple.parentalcontrol.view.MainActivity;
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashSet;
 import java.util.List;
@@ -56,13 +54,14 @@ public class PersistentForegroundService extends Service {
     }
 
     private void startTimer() {
-        ChildAlert childAlert = new ChildAlert(getApplicationContext());
 
         Set<String> approvedAppPackageNames = new HashSet<>();
         for (AppModel app : VUtil.getApprovedAppsList(getPackageManager(), getApplicationContext())) {
             approvedAppPackageNames.add(app.getPackageName());
         }
         approvedAppPackageNames.add("com.chimple.parentalcontrol");
+        approvedAppPackageNames.add("com.coloros.safecenter");
+
 
         timer = new Timer();
         timer.schedule(new TimerTask() {
@@ -73,7 +72,11 @@ public class PersistentForegroundService extends Service {
                 if (approvedAppPackageNames.contains(currentAppPackageName) || currentAppPackageName.isEmpty()) {
                     Log.d("AppChecker", "Approved Package Name: " + currentAppPackageName);
                 } else {
-                    AsyncTaskHelper.runOnUiThread(() -> childAlert.show(R.layout.cl_child_alert));
+                    AsyncTaskHelper.runOnUiThread(() -> {
+                        Intent broadcastIntent = new Intent(getApplicationContext(), LauncherReceiver.class);
+                        getApplicationContext().sendBroadcast(broadcastIntent);
+                    });
+
                     Log.d("AppChecker", "Unapproved Package Name: " + currentAppPackageName);
                 }
             }
@@ -98,8 +101,7 @@ public class PersistentForegroundService extends Service {
                 Method collapsePanelMethod = statusBarManagerClass.getMethod("collapsePanels");
                 collapsePanelMethod.invoke(statusBarService);
             }
-        } catch (ClassNotFoundException | NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
-            Log.e("PersistentService", "Failed to collapse status bar", e);
+        } catch (Exception ignored) {
         }
     }
 
@@ -142,11 +144,7 @@ public class PersistentForegroundService extends Service {
         Intent notificationIntent = new Intent(this, MainActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, PendingIntent.FLAG_IMMUTABLE);
 
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
-                .setContentTitle("Persistent Foreground Service")
-                .setContentText("This service is always running")
-                .setSmallIcon(R.drawable.logo)
-                .setContentIntent(pendingIntent);
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID).setContentTitle("Chimple Launcher").setContentText("Child mode is activated").setSmallIcon(R.drawable.logo).setContentIntent(pendingIntent);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel channel = new NotificationChannel(CHANNEL_ID, "Persistent Foreground Service", NotificationManager.IMPORTANCE_DEFAULT);
