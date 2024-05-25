@@ -32,7 +32,7 @@ To install Chimple Launcher on your Android device, follow these steps:
 ## Usage
 
 1. **Login**
-   - Use your credentials to log into the CHimple Launcher app.
+   - Use your credentials to log into the Chimple Launcher app.
    
 2. **Setting PIN Code**
    - Navigate to settings and generate a PIN code for access control.
