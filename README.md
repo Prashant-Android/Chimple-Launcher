@@ -18,7 +18,7 @@ CHimple Launcher is a parental control application designed in Java for Android 
 
 ## Installation
 
-To install CHimple Launcher on your Android device, follow these steps:
+To install Chimple Launcher on your Android device, follow these steps:
 
 1. Click on the "Releases" tab at the top of this repository.
 2. Find the latest version of the app and download it.
