@@ -1,6 +1,6 @@
 # Chimple Launcher | Parental Control App
 
-CHimple Launcher is a parental control application designed in Java for Android devices. It helps parents manage and control their children's device usage with the following features:
+Chimple Launcher is a parental control application designed in Java for Android devices. It helps parents manage and control their children's device usage with the following features:
 
 1. **Login Authentication using Firebase**
    - Secure authentication system powered by Firebase for user login.

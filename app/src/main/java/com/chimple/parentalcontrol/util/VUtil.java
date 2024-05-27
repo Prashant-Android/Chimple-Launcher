@@ -5,7 +5,11 @@ import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
+import android.view.Display;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.chimple.parentalcontrol.model.AppModel;
@@ -70,5 +74,18 @@ public class VUtil {
 
     public static void showWarning(Context context, String message) {
         Toasty.warning(context, message, Toast.LENGTH_LONG).show();
+    }
+
+    public static boolean isSplitScreenModeActive(Context context) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+            if (windowManager != null) {
+                Display display = windowManager.getDefaultDisplay();
+                Rect rect = new Rect();
+                display.getRectSize(rect);
+                return rect.width() < display.getWidth() || rect.height() < display.getHeight();
+            }
+        }
+        return false;
     }
 }

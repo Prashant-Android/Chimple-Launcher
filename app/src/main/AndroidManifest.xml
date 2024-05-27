@@ -52,14 +52,20 @@
         </activity>
 
 
-        <receiver android:name=".services.LauncherReceiver"
-            android:exported="true"
-           />
+        <receiver
+            android:name=".services.LauncherReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </receiver>
+
         <service
             android:name=".services.PersistentForegroundService"
             android:enabled="true"
             android:exported="false"
-            android:foregroundServiceType="dataSync"
+            android:foregroundServiceType="dataSync|location|connectedDevice"
             tools:ignore="ForegroundServicePermission" />
 
         <activity

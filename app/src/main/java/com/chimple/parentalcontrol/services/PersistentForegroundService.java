@@ -69,6 +69,7 @@ public class PersistentForegroundService extends Service {
             public void run() {
                 String currentAppPackageName = getCurrentAppPackageName();
 
+
                 if (approvedAppPackageNames.contains(currentAppPackageName) || currentAppPackageName.isEmpty()) {
                     Log.d("AppChecker", "Approved Package Name: " + currentAppPackageName);
                 } else {
