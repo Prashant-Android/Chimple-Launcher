@@ -3,18 +3,17 @@ package com.chimple.parentalcontrol.view;
 import android.app.ActivityManager;
 import android.content.ComponentName;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.provider.Settings;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
@@ -44,21 +43,15 @@ public class MainActivity extends AppCompatActivity {
     private final boolean isPinDialogVisible = false;
     private boolean previousSwitchState = false;
     private AlertDialog alertDialog;
-    private final ActivityResultLauncher<Intent> homeSettingsLauncher = registerForActivityResult(
-            new ActivityResultContracts.StartActivityForResult(),
-            result -> {
-                if (result.getResultCode() == RESULT_OK) {
-                    if (isDefaultLauncher()) {
-                        startAppChecker();
-                        Log.d("ISDEFAULT", "Default launcher set");
-                    } else {
-                        defaultLauncherSetting();
-                        Log.d("ISDEFAULT", "Launcher set, but not default");
-                    }
-                } else {
-                    Log.d("ISDEFAULT", "Home settings not OK");
-                }
-            });
+    private final ActivityResultLauncher<Intent> homeSettingsLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+        if (result.getResultCode() == RESULT_OK) {
+            if (isDefaultLauncher()) {
+                startAppChecker();
+            } else {
+                defaultLauncherSetting();
+            }
+        }
+    });
 
 
     public static boolean isServiceRunning(Context context, Class<?> serviceClass) {
@@ -72,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
         }
         return false;
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -224,24 +218,10 @@ public class MainActivity extends AppCompatActivity {
         checkOverlayPermission();
         showApprovedApps();
 
-        if (VUtil.isSplitScreenModeActive(getApplicationContext())){
-            Log.d("Splitter", "Splitting");
-
-        }else{
-            Log.d("Splitter", "Not Splitting");
-
-        }
-
-        if ( isDefaultLauncher()) {
-
-            Log.d("ISDEFAULT", "Default launcher set");
-        } else {
-
-            if (isSwitchOn && LocalPreference.getChildModeStatus().equals("on") && !isDefaultLauncher()){
+        if (!isDefaultLauncher()) {
+            if (isSwitchOn && LocalPreference.getChildModeStatus().equals("on") && !isDefaultLauncher()) {
                 showSetDefaultLauncherDialog();
             }
-            Log.d("ISDEFAULT", "Launcher set, but not default");
-
         }
 
         if (!isSwitchOn && LocalPreference.getChildModeStatus().equals("off") && isServiceRunning(getApplicationContext(), PersistentForegroundService.class)) {
@@ -259,7 +239,7 @@ public class MainActivity extends AppCompatActivity {
 
         final String myPackageName = getPackageName();
         List<ComponentName> activities = new ArrayList<>();
-        final PackageManager packageManager = (PackageManager) getPackageManager();
+        final PackageManager packageManager = getPackageManager();
         packageManager.getPreferredActivities(filters, activities, null);
 
         for (ComponentName activity : activities) {
@@ -269,35 +249,58 @@ public class MainActivity extends AppCompatActivity {
         }
         return false;
     }
+
     private void showSetDefaultLauncherDialog() {
         if (alertDialog != null && alertDialog.isShowing()) {
             return; // Prevent multiple dialogs
         }
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("CHILD MODE IS ON");
-        builder.setMessage("BUT YOU HAVE NOT SET CHIMPLE APP AS THE DEFAULT LAUNCHER FOR PROPER WORKING.");
-        builder.setPositiveButton("CANCEL CHILD MODE", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                // Handle cancelling child mode
-                // For example:
-                isSwitchOn = false;
-                childModeSwitch.setChecked(false);
-                updateChildModeStatus();
-                closeAppChecker();
-                VUtil.showSuccessToast(getApplicationContext(), "Mode is off");
-            }
+        AlertDialog.Builder builder = getBuilder();
+        builder.setNegativeButton("Set as Default", (dialog, which) -> {
+            defaultLauncherSetting();
+            startAppChecker();
         });
-        builder.setNegativeButton("SET AS DEFAULT", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                defaultLauncherSetting();
-                startAppChecker();
-            }
-        });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+
 
         alertDialog = builder.create();
         alertDialog.show();
+    }
+
+    @NonNull
+    private AlertDialog.Builder getBuilder() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Child Mode Active");
+        builder.setMessage("For proper functionality, please set the Chimple app as the default launcher.");
+        builder.setPositiveButton("Cancel Child Mode", (dialog, which) -> {
+            isSwitchOn = false;
+            childModeSwitch.setChecked(false);
+            updateChildModeStatus();
+            closeAppChecker();
+            VUtil.showSuccessToast(getApplicationContext(), "Child mode is off");
+        });
+        return builder;
+    }
+
+    @Override
+    public void onMultiWindowModeChanged(boolean isInMultiWindowMode) {
+        super.onMultiWindowModeChanged(isInMultiWindowMode);
+
+        if (isInMultiWindowMode) {
+            VUtil.showErrorToast(MainActivity.this, "Multi-window mode is not supported");
+            finish();
+        }
+    }
+
+    @Override
+    public void onPictureInPictureModeChanged(boolean isInPictureInPictureMode) {
+        super.onPictureInPictureModeChanged(isInPictureInPictureMode);
+
+        if (isInPictureInPictureMode) {
+            VUtil.showErrorToast(MainActivity.this, "Picture-in-picture mode is not supported");
+            finish();
+        }
     }
 }
