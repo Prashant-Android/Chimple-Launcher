@@ -1,10 +1,13 @@
 package com.chimple.parentalcontrol.view;
 
+import static com.chimple.parentalcontrol.util.VUtil.isAccessibilityServiceEnabled;
+
 import android.app.usage.UsageStats;
 import android.app.usage.UsageStatsManager;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.view.View;
@@ -46,12 +49,19 @@ public class SettingActivity extends AppCompatActivity {
 
         }
 
+        if (Build.VERSION.SDK_INT == 34) {
+            binding.accessibilityServiceLayout.setVisibility(View.VISIBLE);
+        } else {
+            binding.accessibilityServiceLayout.setVisibility(View.GONE);
+
+        }
+
         binding.backBtn.setOnClickListener(v -> finish());
 
         binding.nextBtn.setOnClickListener(v -> {
             if (isAlertWindowPermissionGranted && isAppUsagePermissionGranted && LocalPreference.getPin().isEmpty()) {
                 showPinDialog();
-            }else{
+            } else {
                 startActivity(new Intent(SettingActivity.this, MainActivity.class));
                 finish();
             }
@@ -88,6 +98,15 @@ public class SettingActivity extends AppCompatActivity {
     }
 
     private void setSwitchListeners() {
+
+        binding.accessibilityServiceSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (!isChecked) {
+                VUtil.showWarning(this, "Alert window permission must be enabled");
+            } else {
+                openAccessibilitySettings();
+            }
+        });
+
         binding.alertWindowSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (!isChecked) {
                 VUtil.showWarning(this, "Alert window permission must be enabled");
@@ -105,6 +124,8 @@ public class SettingActivity extends AppCompatActivity {
         });
     }
 
+
+
     private void openDrawOverAppsPermissionScreen() {
         Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:" + getPackageName()));
         startActivity(intent);
@@ -112,6 +133,11 @@ public class SettingActivity extends AppCompatActivity {
 
     private void openUsageAccessPermissionScreen() {
         Intent intent = new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS);
+        startActivity(intent);
+    }
+
+    private void openAccessibilitySettings() {
+        Intent intent = new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS);
         startActivity(intent);
     }
 
@@ -136,6 +162,8 @@ public class SettingActivity extends AppCompatActivity {
         if (!LocalPreference.getPin().isEmpty()) {
             binding.nextBtn.setVisibility(View.GONE);
         }
+
+        binding.accessibilityServiceSwitch.setChecked(isAccessibilityServiceEnabled(getApplicationContext()));
         binding.nextBtn.setEnabled(isAlertWindowPermissionGranted && isAppUsagePermissionGranted);
     }
 }

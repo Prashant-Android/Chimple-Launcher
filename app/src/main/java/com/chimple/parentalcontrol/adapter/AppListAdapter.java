@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.chimple.parentalcontrol.R;
 import com.chimple.parentalcontrol.model.AppModel;
+import com.chimple.parentalcontrol.util.AsyncTaskHelper;
 import com.chimple.parentalcontrol.util.LocalPreference;
 
 import java.util.List;
@@ -39,15 +40,21 @@ public class AppListAdapter extends RecyclerView.Adapter<AppListAdapter.AppViewH
         holder.appSwitch.setText(appInfo.getAppName());
         holder.appIconImageView.setImageDrawable(appInfo.getAppIcon());
 
-        holder.appSwitch.setOnCheckedChangeListener(null); // Avoid triggering listener on recycled views
+        holder.appSwitch.setOnCheckedChangeListener(null);
         holder.appSwitch.setChecked(LocalPreference.isAppApproved(context, appInfo.getPackageName()));
 
         holder.appSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked) {
-                LocalPreference.addAppToApprovedList(context, appInfo.getPackageName());
-            } else {
-                LocalPreference.removeAppFromApprovedList(context, appInfo.getPackageName());
-            }
+            AsyncTaskHelper.runInBackground(new Runnable() {
+                @Override
+                public void run() {
+                    if (isChecked) {
+                        LocalPreference.addAppToApprovedList(context, appInfo.getPackageName());
+                    } else {
+                        LocalPreference.removeAppFromApprovedList(context, appInfo.getPackageName());
+                    }
+                }
+            });
+
         });
     }
 

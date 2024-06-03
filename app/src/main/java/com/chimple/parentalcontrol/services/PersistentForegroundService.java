@@ -13,6 +13,7 @@ import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
 import android.util.Log;
+import android.view.accessibility.AccessibilityEvent;
 
 import androidx.core.app.NotificationCompat;
 
@@ -68,7 +69,7 @@ public class PersistentForegroundService extends Service {
             @Override
             public void run() {
                 String currentAppPackageName = getCurrentAppPackageName();
-
+                Log.d("AppChecker", "Approved Package Name: " + approvedAppPackageNames.toString());
 
                 if (approvedAppPackageNames.contains(currentAppPackageName) || currentAppPackageName.isEmpty()) {
                     Log.d("AppChecker", "Approved Package Name: " + currentAppPackageName);
@@ -81,7 +82,7 @@ public class PersistentForegroundService extends Service {
                     Log.d("AppChecker", "Unapproved Package Name: " + currentAppPackageName);
                 }
             }
-        }, 0, 1000);
+        }, 0, 800);
     }
 
     private void startCollapseStatusBarTask() {
@@ -106,17 +107,7 @@ public class PersistentForegroundService extends Service {
         }
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        stopTimer();
-    }
 
-    private void stopTimer() {
-        if (timer != null) {
-            timer.cancel();
-        }
-    }
 
     private String getCurrentAppPackageName() {
         UsageStatsManager usageStatsManager = (UsageStatsManager) getSystemService(Context.USAGE_STATS_SERVICE);

@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.view.KeyEvent;
@@ -77,11 +78,16 @@ public class MainActivity extends AppCompatActivity {
         childModeSwitch.setChecked(isSwitchOn);
 
         if (isSwitchOn && LocalPreference.getChildModeStatus().equals("on") && !isServiceRunning(getApplicationContext(), PersistentForegroundService.class)) {
+
+
             startAppChecker();
         }
 
 
+
+
         childModeSwitch.setOnClickListener(v -> {
+
             if (!isPinDialogVisible) {
                 previousSwitchState = isSwitchOn;
                 PinVerificationUtil.showPinDialog(MainActivity.this, new PinVerificationUtil.PinVerificationCallbacks() {
@@ -210,6 +216,11 @@ public class MainActivity extends AppCompatActivity {
         if (!Settings.canDrawOverlays(this)) {
             startActivity(new Intent(this, SettingActivity.class));
         }
+    }
+
+    private void openAccessibilitySettings() {
+        Intent intent = new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS);
+        startActivity(intent);
     }
 
     @Override

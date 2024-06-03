@@ -36,13 +36,13 @@ To install Chimple Launcher on your Android device, follow these steps:
    
 2. **Setting PIN Code**
    - Navigate to settings and generate a PIN code for access control.
-
+   
 3. **Kid Mode**
    - Activate Kid Mode to restrict app usage to approved applications.
    
 4. **Notification Management**
    - Notifications are automatically collapsed in Kid Mode to minimize distractions.
-
+   
 ## Support
 
 For support or issues, please contact [prashant.deshmukh@sutara.com](mailto:prashant.deshmukh@sutara.com).

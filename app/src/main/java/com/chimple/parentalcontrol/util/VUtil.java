@@ -8,11 +8,14 @@ import android.content.pm.ResolveInfo;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.provider.Settings;
+import android.text.TextUtils;
 import android.view.Display;
 import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.chimple.parentalcontrol.model.AppModel;
+import com.chimple.parentalcontrol.services.NotificationBlockAccessibilityService;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -46,6 +49,31 @@ public class VUtil {
 
         return appList;
     }
+
+    public static boolean isAccessibilityServiceEnabled(Context context) {
+        int accessibilityEnabled = 0;
+        final String service =context.getPackageName() + "/" + NotificationBlockAccessibilityService.class.getCanonicalName();
+        try {
+            accessibilityEnabled = Settings.Secure.getInt(context.getContentResolver(), Settings.Secure.ACCESSIBILITY_ENABLED);
+        } catch (Settings.SettingNotFoundException e) {
+            e.printStackTrace();
+        }
+        if (accessibilityEnabled == 1) {
+            String settingValue = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES);
+            if (settingValue != null) {
+                TextUtils.SimpleStringSplitter splitter = new TextUtils.SimpleStringSplitter(':');
+                splitter.setString(settingValue);
+                while (splitter.hasNext()) {
+                    String accessibilityService = splitter.next();
+                    if (accessibilityService.equalsIgnoreCase(service)) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
 
     public static List<AppModel> getApprovedAppsList(PackageManager pm, Context context) {
         List<AppModel> approvedAppsList = new ArrayList<>();

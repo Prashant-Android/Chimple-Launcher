@@ -122,6 +122,44 @@
 
         </com.google.android.material.card.MaterialCardView>
 
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/accessibilityServiceLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:layout_marginHorizontal="@dimen/_2sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            app:cardCornerRadius="@dimen/_10sdp"
+            app:cardElevation="@dimen/_2sdp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_10sdp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/accessibilityServiceSwitch"
+                    android:layout_alignParentStart="true"
+                    android:fontFamily="@font/regular"
+                    android:text="Your device is Android 14 and for blocking the notification panel, you have to provide accessibility permission."
+
+                    android:textSize="@dimen/_10sdp" />
+
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/accessibilityServiceSwitch"
+                    android:layout_width="fill_parent"
+                    android:layout_height="@dimen/_25sdp"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:fontFamily="@font/medium"
+                    android:text="Accessbililty Permission"
+                    android:textSize="@dimen/_12sdp"
+                    android:theme="@style/SwitchCompatThemeOverlay" />
+            </RelativeLayout>
+
+        </com.google.android.material.card.MaterialCardView>
 
 
         <com.google.android.material.card.MaterialCardView
